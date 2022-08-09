@@ -20,8 +20,5 @@ public class ListOrderResponse {
 
     private String shipName;
 
-
-    private Employee employee;
-
-    private Customer customer;
+    private String fullName;
 }

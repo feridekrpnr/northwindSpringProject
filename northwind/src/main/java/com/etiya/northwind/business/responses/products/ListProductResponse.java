@@ -19,4 +19,12 @@ public class ListProductResponse {
     private int categoryId;
 
     private String categoryName;
+
+    private int pageNo;
+
+    private int pageSize;
+
+    private int totalPage;
+
+    private int totalData;
 }

@@ -1,67 +1,67 @@
 package com.etiya.northwind.business.concretes;
 
 import com.etiya.northwind.business.abstracts.OrderService;
+import com.etiya.northwind.business.requests.orders.CreateOrderRequest;
+import com.etiya.northwind.business.requests.orders.DeleteOrderRequest;
+import com.etiya.northwind.business.requests.orders.UpdateOrderRequest;
+import com.etiya.northwind.business.responses.orders.GetOrderResponse;
 import com.etiya.northwind.business.responses.orders.ListOrderResponse;
-import com.etiya.northwind.dataAccess.abstracts.CustomerRepository;
-import com.etiya.northwind.dataAccess.abstracts.EmployeeRepository;
+import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
 import com.etiya.northwind.dataAccess.abstracts.OrderRepository;
-import com.etiya.northwind.entities.concretes.Customer;
-import com.etiya.northwind.entities.concretes.Employee;
 import com.etiya.northwind.entities.concretes.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class OrderManager implements OrderService {
 
     private OrderRepository orderRepository;
-    private EmployeeRepository employeeRepository;
-    private CustomerRepository customerRepository;
+
+
+    private ModelMapperService modelMapperService;
     @Autowired
-    public OrderManager(OrderRepository orderRepository, EmployeeRepository employeeRepository, CustomerRepository customerRepository) {
+    public OrderManager(OrderRepository orderRepository,ModelMapperService modelMapperService) {
         this.orderRepository = orderRepository;
-        this.employeeRepository = employeeRepository;
-        this.customerRepository = customerRepository;
+
+        this.modelMapperService = modelMapperService;
 
     }
-        @Override
+
+    @Override
+    public void add(CreateOrderRequest createOrderRequest) {
+         Order order = this.modelMapperService.forRequest().map(createOrderRequest,Order.class);
+         this.orderRepository.save(order);
+    }
+
+    @Override
+    public void delete(DeleteOrderRequest deleteOrderRequest) {
+        Order order = this.modelMapperService.forRequest().map(deleteOrderRequest,Order.class);
+        this.orderRepository.delete(order);
+    }
+
+    @Override
+    public void update(UpdateOrderRequest updateOrderRequest) {
+        Order order = this.modelMapperService.forRequest().map(updateOrderRequest,Order.class);
+        this.orderRepository.save(order);
+    }
+
+    @Override
+    public GetOrderResponse getById(int id) {
+        Order order = this.orderRepository.findById(id);
+        GetOrderResponse response = this.modelMapperService.forResponse().map(order,GetOrderResponse.class);
+        return response;
+    }
+
+    @Override
         public List<ListOrderResponse> getAll() {
             List<Order> result = orderRepository.findAll();
-            List<Employee> employees = employeeRepository.findAll();
-            List<Customer> customers = customerRepository.findAll();
-            List<ListOrderResponse> response = new ArrayList<ListOrderResponse>();
-
-
-            for (Order order : result) {
-                ListOrderResponse listOrderResponse = new ListOrderResponse();
-                listOrderResponse.setOrderId(order.getOrderId());
-                listOrderResponse.setOrderDate(order.getOrderDate());
-                listOrderResponse.setShipName(order.getShipName());
-                Employee employee = new Employee();
-
-                for (Employee item : employees) {
-                    if (order.getEmployee().getEmployeeId() != employee.getEmployeeId()) {
-                        employee.setEmployeeId(item.getEmployeeId());
-                        employee.setBirthDate(item.getBirthDate());
-                        employee.setFirstName(item.getFirstName());
-                        employee.setLastName(item.getLastName());
-                        listOrderResponse.setEmployee(employee);
-                    }
-                }
-                Customer customer = new Customer();
-                for (Customer item : customers) {
-                    if (order.getCustomer().getCustomerId() != customer.getCustomerId()) {
-                        customer.setCity(item.getCity());
-                        customer.setCompanyName(item.getCompanyName());
-                        customer.setContactName(item.getContactName());
-                        customer.setCustomerId(item.getCustomerId());
-                        listOrderResponse.setCustomer(customer);
-                    }
-                }
-
-                response.add(listOrderResponse);
+            List<ListOrderResponse> response = result.stream().map(order -> this.modelMapperService.forResponse()
+                    .map(order,ListOrderResponse.class)).collect(Collectors.toList());
+            for(int i = 0; i <response.size(); i++) {
+                response.get(i).setFullName(result.get(i).getEmployee().getFirstName()+ " " + result.get(i).getEmployee().getLastName());
             }
             return response;
         }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="suppliers")
@@ -22,5 +23,8 @@ public class Supplier {
     private String address;
     @Column(name="city")
     private String city;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<Product> products;
 
 }
