@@ -37,12 +37,12 @@ public class CustomersController {
         this.customerService.update(updateCustomerRequest);
     }
 
-    @GetMapping("/getByCompanyName")
+    @GetMapping("/getbycompanyname")
     public GetCustomerResponse getByCompanyName(String companyName) {
         return this.customerService.getByCompanyName(companyName);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<ListCustomerResponse> getAll() {
         return this.customerService.getAll();
     }

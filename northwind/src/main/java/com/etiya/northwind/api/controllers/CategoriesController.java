@@ -37,12 +37,12 @@ public class CategoriesController {
         this.categoryService.update(updateCategoryRequest);
     }
 
-    @GetMapping("/getById")
+    @GetMapping("/getbyid")
     public GetCategoryResponse getById(@RequestParam int id) {
         return this.categoryService.getById(id);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<ListCategoryResponse> getAll() {
         return this.categoryService.getAll();
 

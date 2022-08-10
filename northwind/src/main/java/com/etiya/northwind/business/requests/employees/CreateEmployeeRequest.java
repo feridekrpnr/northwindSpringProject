@@ -10,6 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreateEmployeeRequest {
 
+    private int employeeId;
+
     private String firstName;
 
     private String lastName;

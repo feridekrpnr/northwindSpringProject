@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreateOrderRequest {
 
+    private int orderId;
 
     private Date orderDate;
 

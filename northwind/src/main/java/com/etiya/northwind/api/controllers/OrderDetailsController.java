@@ -35,12 +35,12 @@ public class OrderDetailsController {
         this.orderDetailService.update(updateOrderDetailRequest);
     }
 
-    @GetMapping("/getById")
+    @GetMapping("/getbyid")
     public GetOrderDetailResponse getById(int orderId, int productId) {
         return this.orderDetailService.getById(orderId,productId);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<ListOrderDetailResponse> getAll() {
         return this.orderDetailService.getAll();
     }

@@ -37,12 +37,12 @@ public class EmployeesController {
 
     }
 
-    @GetMapping("/getById")
+    @GetMapping("/getbyid")
     public GetEmployeeResponse getById(@RequestParam int id) {
         return this.employeeService.getById(id);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<ListEmployeeResponse> getAll() {
         return this.employeeService.getAll();
     }

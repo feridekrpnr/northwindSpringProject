@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Supplier {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="supplier_id")
     private int supplierId;
     @Column(name="company_name")

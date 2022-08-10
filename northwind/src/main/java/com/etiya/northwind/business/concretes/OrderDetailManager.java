@@ -28,17 +28,20 @@ public class OrderDetailManager implements OrderDetailService {
 
     @Override
     public void add(CreateOrderDetailRequest createOrderDetailRequest) {
-
+        OrderDetail orderDetail = this.modelMapperService.forRequest().map(createOrderDetailRequest,OrderDetail.class);
+        this.orderDetailRepository.save(orderDetail);
     }
 
     @Override
     public void delete(DeleteOrderDetailRequest deleteOrderDetailRequest) {
-
+        OrderDetail orderDetail = this.modelMapperService.forRequest().map(deleteOrderDetailRequest,OrderDetail.class);
+        this.orderDetailRepository.delete(orderDetail);
     }
 
     @Override
     public void update(UpdateOrderDetailRequest updateOrderDetailRequest) {
-
+        OrderDetail orderDetail = this.modelMapperService.forRequest().map(updateOrderDetailRequest,OrderDetail.class);
+        this.orderDetailRepository.save(orderDetail);
     }
 
     @Override

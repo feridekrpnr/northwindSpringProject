@@ -11,8 +11,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class OrderDetailId implements Serializable {
 
-    private Order order;
-    private Product product;
+    private static final long serialVERSIONUID= 1L;
+
+    private int orderId;
+    private int productId;
 
 
 }

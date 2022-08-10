@@ -9,6 +9,7 @@ import com.etiya.northwind.business.responses.products.ListProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController //restful controller http protokolünü kullanarak farklı uygulamaların sistemimize erişimini saglar
@@ -23,7 +24,7 @@ public class ProductsController {
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateProductRequest createProductRequest) {
+    public void add(@RequestBody @Valid CreateProductRequest createProductRequest) {
         this.productService.add(createProductRequest);
     }
 
@@ -38,22 +39,22 @@ public class ProductsController {
         this.productService.update(updateProductRequest);
     }
 
-    @GetMapping("/getById")
+    @GetMapping("/getbyid")
     public GetProductResponse getById(@RequestParam int id) {
         return this.productService.getById(id);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public List<ListProductResponse> getAll() {
         return this.productService.getAll();
     }
 
-    @GetMapping("/getAllByPage")
+    @GetMapping("/getallbypage")
     public List<ListProductResponse> getAllByPage(int pageNo,int pageSize) {
         return this.productService.getAll(pageNo,pageSize);
     }
 
-    @GetMapping("getAllAsc")
+    @GetMapping("getallasc")
     public List<ListProductResponse> getAllSorted(int type, String data) {
         return this.productService.getAllSorted(type, data);
     }
