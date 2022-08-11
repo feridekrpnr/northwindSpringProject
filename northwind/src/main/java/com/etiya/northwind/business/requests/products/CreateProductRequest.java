@@ -21,6 +21,7 @@ public class CreateProductRequest {
     @PositiveOrZero
     private int unitsInStock;
     @Positive
+    
     private int categoryId;
     @Min(0)
     private int supplierId;

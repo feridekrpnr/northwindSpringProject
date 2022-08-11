@@ -6,9 +6,12 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.GetEmployeeResponse;
 import com.etiya.northwind.business.responses.employees.ListEmployeeResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,28 +25,28 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
     @PostMapping("/add")
-    public void add(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
-        this.employeeService.add(createEmployeeRequest);
+    public Result add(@RequestBody @Valid CreateEmployeeRequest createEmployeeRequest) {
+        return this.employeeService.add(createEmployeeRequest);
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestBody DeleteEmployeeRequest deleteEmployeeRequest) {
-        this.employeeService.delete(deleteEmployeeRequest);
+    public Result delete(@RequestBody DeleteEmployeeRequest deleteEmployeeRequest) {
+        return this.employeeService.delete(deleteEmployeeRequest);
     }
 
     @PostMapping("/update")
-    public void update(@RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
-        this.employeeService.update(updateEmployeeRequest);
+    public Result update(@RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
+        return this.employeeService.update(updateEmployeeRequest);
 
     }
 
     @GetMapping("/getbyid")
-    public GetEmployeeResponse getById(@RequestParam int id) {
+    public DataResult<GetEmployeeResponse> getById(@RequestParam int id) {
         return this.employeeService.getById(id);
     }
 
     @GetMapping("/getall")
-    public List<ListEmployeeResponse> getAll() {
+    public DataResult<List<ListEmployeeResponse>> getAll() {
         return this.employeeService.getAll();
     }
 

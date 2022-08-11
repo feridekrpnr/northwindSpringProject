@@ -6,6 +6,8 @@ import com.etiya.northwind.business.requests.products.DeleteProductRequest;
 import com.etiya.northwind.business.requests.products.UpdateProductRequest;
 import com.etiya.northwind.business.responses.products.GetProductResponse;
 import com.etiya.northwind.business.responses.products.ListProductResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,38 +26,38 @@ public class ProductsController {
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody @Valid CreateProductRequest createProductRequest) {
-        this.productService.add(createProductRequest);
+    public Result add(@RequestBody @Valid CreateProductRequest createProductRequest) {
+        return this.productService.add(createProductRequest);
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestBody DeleteProductRequest deleteProductRequest) {
-        this.productService.delete(deleteProductRequest);
+    public Result delete(@RequestBody DeleteProductRequest deleteProductRequest) {
+        return this.productService.delete(deleteProductRequest);
     }
 
 
     @PostMapping("/update")
-    public void update(@RequestBody UpdateProductRequest updateProductRequest) {
-        this.productService.update(updateProductRequest);
+    public Result update(@RequestBody UpdateProductRequest updateProductRequest) {
+        return this.productService.update(updateProductRequest);
     }
 
     @GetMapping("/getbyid")
-    public GetProductResponse getById(@RequestParam int id) {
+    public DataResult<GetProductResponse >getById(@RequestParam int id) {
         return this.productService.getById(id);
     }
 
     @GetMapping("/getall")
-    public List<ListProductResponse> getAll() {
+    public DataResult<List<ListProductResponse>>getAll() {
         return this.productService.getAll();
     }
 
     @GetMapping("/getallbypage")
-    public List<ListProductResponse> getAllByPage(int pageNo,int pageSize) {
+    public DataResult<List<ListProductResponse>> getAllByPage(int pageNo,int pageSize) {
         return this.productService.getAll(pageNo,pageSize);
     }
 
     @GetMapping("getallasc")
-    public List<ListProductResponse> getAllSorted(int type, String data) {
+    public DataResult<List<ListProductResponse>> getAllSorted(int type, String data) {
         return this.productService.getAllSorted(type, data);
     }
 }

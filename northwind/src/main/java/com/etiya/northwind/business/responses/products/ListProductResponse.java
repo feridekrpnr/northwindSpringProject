@@ -20,6 +20,8 @@ public class ListProductResponse {
 
     private String categoryName;
 
+    private int discontinued;
+
     private int pageNo;
 
     private int pageSize;

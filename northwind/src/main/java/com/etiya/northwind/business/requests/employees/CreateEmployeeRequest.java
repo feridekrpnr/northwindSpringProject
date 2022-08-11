@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -15,6 +16,8 @@ public class CreateEmployeeRequest {
     private String firstName;
 
     private String lastName;
-
+    @PastOrPresent
     private Date birthDate;
+
+    private int reportsTo;
 }

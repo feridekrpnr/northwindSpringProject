@@ -5,17 +5,19 @@ import com.etiya.northwind.business.requests.orderDetails.DeleteOrderDetailReque
 import com.etiya.northwind.business.requests.orderDetails.UpdateOrderDetailRequest;
 import com.etiya.northwind.business.responses.orderDetails.GetOrderDetailResponse;
 import com.etiya.northwind.business.responses.orderDetails.ListOrderDetailResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface OrderDetailService {
 
-    void add(CreateOrderDetailRequest createOrderDetailRequest);
+    Result add(CreateOrderDetailRequest createOrderDetailRequest);
 
-    void delete(DeleteOrderDetailRequest deleteOrderDetailRequest);
+    Result delete(DeleteOrderDetailRequest deleteOrderDetailRequest);
 
-    void update(UpdateOrderDetailRequest updateOrderDetailRequest);
+    Result update(UpdateOrderDetailRequest updateOrderDetailRequest);
 
-    GetOrderDetailResponse getById(int orderId,int productId);
-    List<ListOrderDetailResponse> getAll();
+    DataResult<GetOrderDetailResponse> getById(int orderId, int productId);
+    DataResult<List<ListOrderDetailResponse>> getAll();
 }

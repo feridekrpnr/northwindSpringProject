@@ -23,9 +23,15 @@ public class Customer {
     private String companyName;
     @Column(name="contact_name")
     private String contactName;
-    @Column(name="city")
-    private String city;
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 }

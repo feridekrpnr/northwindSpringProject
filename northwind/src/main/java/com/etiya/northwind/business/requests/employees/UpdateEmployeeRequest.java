@@ -17,4 +17,6 @@ public class UpdateEmployeeRequest {
     private String lastName;
 
     private Date birthDate;
+
+    private int reportsTo;
 }

@@ -6,7 +6,12 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.GetEmployeeResponse;
 import com.etiya.northwind.business.responses.employees.ListEmployeeResponse;
+import com.etiya.northwind.core.exceptions.BusinessException;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.core.utilities.results.SuccessDataResult;
+import com.etiya.northwind.core.utilities.results.SuccessResult;
 import com.etiya.northwind.dataAccess.abstracts.EmployeeRepository;
 import com.etiya.northwind.entities.concretes.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +35,45 @@ public class EmployeeManager implements EmployeeService {
     }
 
     @Override
-    public void add(CreateEmployeeRequest createEmployeeRequest) {
+    public Result add(CreateEmployeeRequest createEmployeeRequest) {
+        checkIfReportsLimitExceeds(createEmployeeRequest.getReportsTo());
         Employee employee = this.modelMapperService.forRequest().map(createEmployeeRequest,Employee.class);
         this.employeeRepository.save(employee);
+        return new SuccessResult("EMPLOYEE.ADDED");
     }
 
     @Override
-    public void delete(DeleteEmployeeRequest deleteEmployeeRequest) {
+    public Result delete(DeleteEmployeeRequest deleteEmployeeRequest) {
         Employee employee = this.modelMapperService.forRequest().map(deleteEmployeeRequest,Employee.class);
         this.employeeRepository.delete(employee);
+        return new SuccessResult("EMPLOYEE.DELETED");
     }
 
     @Override
-    public void update(UpdateEmployeeRequest updateEmployeeRequest) {
+    public Result update(UpdateEmployeeRequest updateEmployeeRequest) {
          Employee employee = this.modelMapperService.forRequest().map(updateEmployeeRequest,Employee.class);
          this.employeeRepository.save(employee);
+         return new SuccessResult("EMPLOYEE.UPDATED");
     }
 
     @Override
-    public GetEmployeeResponse getById(int id) {
+    public DataResult<GetEmployeeResponse > getById(int id) {
         Employee employee = this.employeeRepository.findById(id);
         GetEmployeeResponse response =  this.modelMapperService.forResponse().map(employee,GetEmployeeResponse.class);
-        return response;
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public List<ListEmployeeResponse> getAll() {
+    public DataResult<List<ListEmployeeResponse>>getAll() {
         List<Employee> result = this.employeeRepository.findAll();
         List<ListEmployeeResponse> response =result.stream().map(employee -> this.modelMapperService.forResponse()
                 .map(employee,ListEmployeeResponse.class)).collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<>(response);
+    }
+    private void checkIfReportsLimitExceeds(int reportsTo) {
+        List<Employee> employees = this.employeeRepository.findByReportsTo(reportsTo);
+        if(employees.size()> 9) {
+            throw new BusinessException("Employees reportsTo limit exceedded");
+        }
     }
 }

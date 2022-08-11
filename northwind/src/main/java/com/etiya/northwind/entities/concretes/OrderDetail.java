@@ -20,6 +20,7 @@ public class OrderDetail {
     private int quantity;
     @Column(name="discount")
     private double discount;
+
     @Id
     @Column(name="order_id")
     private int orderId;

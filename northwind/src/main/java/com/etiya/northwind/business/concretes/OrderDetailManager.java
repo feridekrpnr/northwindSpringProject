@@ -7,6 +7,10 @@ import com.etiya.northwind.business.requests.orderDetails.UpdateOrderDetailReque
 import com.etiya.northwind.business.responses.orderDetails.GetOrderDetailResponse;
 import com.etiya.northwind.business.responses.orderDetails.ListOrderDetailResponse;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.core.utilities.results.SuccessDataResult;
+import com.etiya.northwind.core.utilities.results.SuccessResult;
 import com.etiya.northwind.dataAccess.abstracts.OrderDetailRepository;
 import com.etiya.northwind.entities.concretes.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,35 +31,38 @@ public class OrderDetailManager implements OrderDetailService {
     }
 
     @Override
-    public void add(CreateOrderDetailRequest createOrderDetailRequest) {
+    public Result add(CreateOrderDetailRequest createOrderDetailRequest) {
         OrderDetail orderDetail = this.modelMapperService.forRequest().map(createOrderDetailRequest,OrderDetail.class);
         this.orderDetailRepository.save(orderDetail);
+        return new SuccessResult("ORDERDETAIL.ADDED");
     }
 
     @Override
-    public void delete(DeleteOrderDetailRequest deleteOrderDetailRequest) {
+    public Result delete(DeleteOrderDetailRequest deleteOrderDetailRequest) {
         OrderDetail orderDetail = this.modelMapperService.forRequest().map(deleteOrderDetailRequest,OrderDetail.class);
         this.orderDetailRepository.delete(orderDetail);
+        return new SuccessResult("ORDERDETAIL.DELETED");
     }
 
     @Override
-    public void update(UpdateOrderDetailRequest updateOrderDetailRequest) {
+    public Result update(UpdateOrderDetailRequest updateOrderDetailRequest) {
         OrderDetail orderDetail = this.modelMapperService.forRequest().map(updateOrderDetailRequest,OrderDetail.class);
         this.orderDetailRepository.save(orderDetail);
+        return new SuccessResult("ORDERDETAIL.UPDATED");
     }
 
     @Override
-    public GetOrderDetailResponse getById(int orderId, int productId) {
+    public DataResult<GetOrderDetailResponse >getById(int orderId, int productId) {
          OrderDetail orderDetail = this.orderDetailRepository.getByOrder_OrderIdAndProduct_ProductId(orderId,productId);
          GetOrderDetailResponse response = this.modelMapperService.forResponse().map(orderDetail,GetOrderDetailResponse.class);
-         return response;
+         return new SuccessDataResult<>(response);
     }
 
     @Override
-    public List<ListOrderDetailResponse> getAll() {
+    public DataResult< List<ListOrderDetailResponse>> getAll() {
         List<OrderDetail> result = this.orderDetailRepository.findAll();
         List<ListOrderDetailResponse> response = result.stream().map(orderDetail ->this.modelMapperService.forResponse()
                 .map(orderDetail,ListOrderDetailResponse.class)).collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<>(response);
     }
 }

@@ -5,20 +5,22 @@ import com.etiya.northwind.business.requests.categories.DeleteCategoryRequest;
 import com.etiya.northwind.business.requests.categories.UpdateCategoryRequest;
 import com.etiya.northwind.business.responses.categories.GetCategoryResponse;
 import com.etiya.northwind.business.responses.categories.ListCategoryResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import com.etiya.northwind.entities.concretes.Category;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    void add(CreateCategoryRequest createCategoryRequest);
+    Result add(CreateCategoryRequest createCategoryRequest);
 
-    void delete(DeleteCategoryRequest deleteCategoryRequest);
+    Result delete(DeleteCategoryRequest deleteCategoryRequest);
 
-    void update(UpdateCategoryRequest updateCategoryRequest);
+    Result update(UpdateCategoryRequest updateCategoryRequest);
 
-    GetCategoryResponse getById(int id);
-    List<ListCategoryResponse> getAll();
+    DataResult<GetCategoryResponse> getById(int id);
+    DataResult<List<ListCategoryResponse>>getAll();
 
 
 }

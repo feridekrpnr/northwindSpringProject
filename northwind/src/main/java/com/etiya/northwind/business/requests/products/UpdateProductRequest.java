@@ -17,7 +17,7 @@ public class UpdateProductRequest {
     private int unitsInStock;
 
     private int categoryId;
-    
+
     private int discontinued;
 
 }

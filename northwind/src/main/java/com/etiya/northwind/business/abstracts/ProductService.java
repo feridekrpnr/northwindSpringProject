@@ -5,17 +5,19 @@ import com.etiya.northwind.business.requests.products.DeleteProductRequest;
 import com.etiya.northwind.business.requests.products.UpdateProductRequest;
 import com.etiya.northwind.business.responses.products.GetProductResponse;
 import com.etiya.northwind.business.responses.products.ListProductResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface ProductService {
 
-    void add(CreateProductRequest createProductRequest);
-    void delete(DeleteProductRequest deleteProductRequest);
-    void update(UpdateProductRequest updateProductRequest);
-    GetProductResponse getById(int id);
-    List<ListProductResponse> getAll();
-    List<ListProductResponse> getAll(int pageNo,int pageSize);
-    List<ListProductResponse> getAllSorted(int type, String data);
+    Result add(CreateProductRequest createProductRequest);
+    Result delete(DeleteProductRequest deleteProductRequest);
+    Result update(UpdateProductRequest updateProductRequest);
+    DataResult< GetProductResponse> getById(int id);
+    DataResult<List<ListProductResponse>> getAll();
+    DataResult<List<ListProductResponse>>getAll(int pageNo,int pageSize);
+    DataResult<List<ListProductResponse>> getAllSorted(int type, String data);
 
 }

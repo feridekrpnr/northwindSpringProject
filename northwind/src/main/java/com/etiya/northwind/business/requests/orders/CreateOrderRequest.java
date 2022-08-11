@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import java.util.Date;
 public class CreateOrderRequest {
 
     private int orderId;
-
+    @PastOrPresent
     private Date orderDate;
 
     private String shipName;

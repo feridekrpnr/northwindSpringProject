@@ -25,8 +25,18 @@ public class Employee {
     private String lastName;
     @Column(name= "birth_date")
     private Date birthDate;
+    @Column(name= "reports_to")
+    private int reportsTo;
 
     @OneToMany(mappedBy="employee")
     private List<Order> orders;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
 }

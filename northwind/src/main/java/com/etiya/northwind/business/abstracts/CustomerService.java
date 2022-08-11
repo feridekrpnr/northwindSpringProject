@@ -5,17 +5,19 @@ import com.etiya.northwind.business.requests.customers.DeleteCustomerRequest;
 import com.etiya.northwind.business.requests.customers.UpdateCustomerRequest;
 import com.etiya.northwind.business.responses.customers.GetCustomerResponse;
 import com.etiya.northwind.business.responses.customers.ListCustomerResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    void add(CreateCustomerRequest createCustomerRequest);
+    Result add(CreateCustomerRequest createCustomerRequest);
 
-    void delete(DeleteCustomerRequest deleteCustomerRequest);
+    Result delete(DeleteCustomerRequest deleteCustomerRequest);
 
-    void update(UpdateCustomerRequest updateCustomerRequest);
+    Result update(UpdateCustomerRequest updateCustomerRequest);
 
-    GetCustomerResponse getByCompanyName(String companyName);
-    List<ListCustomerResponse> getAll();
+    DataResult<GetCustomerResponse > getByCompanyName(String companyName);
+    DataResult<List<ListCustomerResponse>> getAll();
 }

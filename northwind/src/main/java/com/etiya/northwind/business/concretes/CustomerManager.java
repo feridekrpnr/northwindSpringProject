@@ -7,6 +7,10 @@ import com.etiya.northwind.business.requests.customers.UpdateCustomerRequest;
 import com.etiya.northwind.business.responses.customers.GetCustomerResponse;
 import com.etiya.northwind.business.responses.customers.ListCustomerResponse;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.core.utilities.results.SuccessDataResult;
+import com.etiya.northwind.core.utilities.results.SuccessResult;
 import com.etiya.northwind.dataAccess.abstracts.CustomerRepository;
 import com.etiya.northwind.entities.concretes.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +34,39 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public void add(CreateCustomerRequest createCustomerRequest) {
+    public Result add(CreateCustomerRequest createCustomerRequest) {
         Customer customer = this.modelMapperService.forRequest().map(createCustomerRequest,Customer.class);
         this.customerRepository.save(customer);
+        return new SuccessResult("CUSTOMER.ADDED");
     }
 
     @Override
-    public void delete(DeleteCustomerRequest deleteCustomerRequest) {
+    public Result delete(DeleteCustomerRequest deleteCustomerRequest) {
         Customer customer = this.modelMapperService.forRequest().map(deleteCustomerRequest,Customer.class);
         this.customerRepository.delete(customer);
+        return new SuccessResult("CUSTOMER.DELETED");
     }
 
     @Override
-    public void update(UpdateCustomerRequest updateCustomerRequest) {
+    public Result update(UpdateCustomerRequest updateCustomerRequest) {
         Customer customer = this.modelMapperService.forRequest().map(updateCustomerRequest,Customer.class);
         this.customerRepository.save(customer);
+        return new SuccessResult("CUSTOMER.UPDATED");
     }
 
     @Override
-    public GetCustomerResponse getByCompanyName(String companyName) {
+    public DataResult <GetCustomerResponse >getByCompanyName(String companyName) {
         Customer customer = this.customerRepository.findByCompanyName(companyName);
         GetCustomerResponse response = this.modelMapperService.forResponse().map(customer,GetCustomerResponse.class);
-        return response;
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public List<ListCustomerResponse> getAll() {
+    public DataResult <List<ListCustomerResponse>> getAll() {
         List<Customer> result = this.customerRepository.findAll();
         List<ListCustomerResponse> response = result.stream().map(customer -> this.modelMapperService.forResponse()
                 .map(customer,ListCustomerResponse.class)).collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<>(response);
 
 
     }

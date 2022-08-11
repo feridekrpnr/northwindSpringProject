@@ -6,9 +6,12 @@ import com.etiya.northwind.business.requests.orders.DeleteOrderRequest;
 import com.etiya.northwind.business.requests.orders.UpdateOrderRequest;
 import com.etiya.northwind.business.responses.orders.GetOrderResponse;
 import com.etiya.northwind.business.responses.orders.ListOrderResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,27 +25,27 @@ public class OrdersController {
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateOrderRequest createOrderRequest) {
-        this.orderService.add(createOrderRequest);
+    public Result add(@RequestBody @Valid CreateOrderRequest createOrderRequest) {
+        return this.orderService.add(createOrderRequest);
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestBody DeleteOrderRequest deleteOrderRequest) {
-        this.orderService.delete(deleteOrderRequest);
+    public Result delete(@RequestBody DeleteOrderRequest deleteOrderRequest) {
+        return this.orderService.delete(deleteOrderRequest);
     }
 
     @PostMapping("/update")
-    public void update(@RequestBody UpdateOrderRequest updateOrderRequest) {
-        this.orderService.update(updateOrderRequest);
+    public Result update(@RequestBody UpdateOrderRequest updateOrderRequest) {
+        return this.orderService.update(updateOrderRequest);
     }
 
     @GetMapping("/getbyid")
-    public GetOrderResponse getById(@RequestParam int id) {
+    public DataResult <GetOrderResponse >getById(@RequestParam int id) {
         return this.orderService.getById(id);
     }
 
     @GetMapping("/getall")
-    public List<ListOrderResponse> getAll() {
+    public DataResult<List<ListOrderResponse>>getAll() {
         return this.orderService.getAll();
     }
 

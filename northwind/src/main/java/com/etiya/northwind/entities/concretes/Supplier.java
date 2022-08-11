@@ -21,10 +21,16 @@ public class Supplier {
     private String companyName;
     @Column(name="address")
     private String address;
-    @Column(name="city")
-    private String city;
 
     @OneToMany(mappedBy = "supplier")
     private List<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
 }

@@ -5,17 +5,19 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.GetEmployeeResponse;
 import com.etiya.northwind.business.responses.employees.ListEmployeeResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    void add(CreateEmployeeRequest createEmployeeRequest);
+    Result add(CreateEmployeeRequest createEmployeeRequest);
 
-    void delete(DeleteEmployeeRequest deleteEmployeeRequest);
+    Result delete(DeleteEmployeeRequest deleteEmployeeRequest);
 
-    void update(UpdateEmployeeRequest updateEmployeeRequest);
+    Result update(UpdateEmployeeRequest updateEmployeeRequest);
 
-    GetEmployeeResponse getById(int id);
-    List<ListEmployeeResponse> getAll();
+    DataResult <GetEmployeeResponse >getById(int id);
+    DataResult<List<ListEmployeeResponse>> getAll();
 }

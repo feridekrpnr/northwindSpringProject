@@ -6,6 +6,8 @@ import com.etiya.northwind.business.requests.suppliers.DeleteSupplierRequest;
 import com.etiya.northwind.business.requests.suppliers.UpdateSupplierRequest;
 import com.etiya.northwind.business.responses.suppliers.GetSupplierResponse;
 import com.etiya.northwind.business.responses.suppliers.ListSupplierResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,27 +26,27 @@ public class SuppliersController {
 
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateSupplierRequest createSupplierRequest) {
-        this.supplierService.add(createSupplierRequest);
+    public Result add(@RequestBody CreateSupplierRequest createSupplierRequest) {
+        return this.supplierService.add(createSupplierRequest);
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestBody DeleteSupplierRequest deleteSupplierRequest) {
-        this.supplierService.delete(deleteSupplierRequest);
+    public Result delete(@RequestBody DeleteSupplierRequest deleteSupplierRequest) {
+        return this.supplierService.delete(deleteSupplierRequest);
     }
 
 
     @PostMapping("/update")
-    public void update(@RequestBody UpdateSupplierRequest updateSupplierRequest) {
-        this.supplierService.update(updateSupplierRequest);
+    public Result update(@RequestBody UpdateSupplierRequest updateSupplierRequest) {
+        return this.supplierService.update(updateSupplierRequest);
     }
 
     @GetMapping("/getById")
-    public GetSupplierResponse getById(@RequestParam int id) {
+    public DataResult<GetSupplierResponse >getById(@RequestParam int id) {
         return this.supplierService.getById(id);
     }
     @GetMapping("/getAll")
-    public List<ListSupplierResponse> getAll() {
+    public DataResult<List<ListSupplierResponse>> getAll() {
         return this.supplierService.getAll();
 
     }
